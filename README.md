@@ -4,6 +4,8 @@ A simple script to install Docker, Kubernetes and Helm on a fresh Ubuntu 16.04 i
 
 At the end, you will have Docker Community Edition, Kubernetes with RBAC installed by KubeAdm and Helm package manager, already installed with Tiller on your Kubernetes cluster. I've chosen Calico as ingress controller, feel free to choose any other like Flannel and etc...
 
+Warning !!: Script closes Swap space usage on current Linux, Kubelet needs that. Use at your own risk !
+
 ## Getting Started
 
 ### Prerequisites
