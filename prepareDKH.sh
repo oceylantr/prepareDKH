@@ -10,8 +10,20 @@ sudo add-apt-repository \
    $(lsb_release -cs) \
    stable";
 sudo apt-get update;
-sudo apt-get install -y docker-ce;
-sudo apt-get install -y apt-transport-https;
+sudo apt-get install -y docker-ce=18.06.0~ce~3-0~ubuntu;
+sudo cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF;
+sudo mkdir -p /etc/systemd/system/docker.service.d;
+sudo systemctl daemon-reload;
+sudo systemctl restart docker;
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -;
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list;
 sudo apt-get update;
@@ -26,7 +38,7 @@ sudo kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubern
 sudo kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
 sudo kubectl taint nodes --all node-role.kubernetes.io/master-;
 wget https://kubernetes-helm.storage.googleapis.com/helm-v2.11.0-linux-amd64.tar.gz;
-sudo tar -zxvf helm-v2.8.2-linux-amd64.tar.gz;
+sudo tar -zxvf helm-v2.11.0-linux-amd64.tar.gz;
 sudo cp linux-amd64/helm /usr/local/bin/;
 sudo chmod a+x /usr/local/bin/helm;
 helm init --upgrade;
