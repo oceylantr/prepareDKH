@@ -53,6 +53,11 @@ Check Helm & Tiller status. You should wait some time for Tiller pod to be deplo
 helm version
 ```
 
+## Component Versions Now
+Kubernetes 1.12.2
+Docker Community Edition 18.06.0~ce~3-0~ubuntu
+Helm 2.11.0
+Calico 3.3 RBAC
 
 ## Built With
 
