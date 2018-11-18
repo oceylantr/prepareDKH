@@ -11,19 +11,6 @@ sudo add-apt-repository \
    stable";
 sudo apt-get update;
 sudo apt-get install -y docker-ce=18.06.0~ce~3-0~ubuntu;
-sudo cat > /etc/docker/daemon.json <<EOF
-{
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-}
-EOF;
-sudo mkdir -p /etc/systemd/system/docker.service.d;
-sudo systemctl daemon-reload;
-sudo systemctl restart docker;
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -;
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list;
 sudo apt-get update;
